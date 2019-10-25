@@ -5,15 +5,31 @@
 
 from setuptools import setup, find_packages
 
+# import build_ui
+try:
+    from pyqt_distutils.build_ui import build_ui
+
+    cmdclass = {'build_ui': build_ui}
+except ImportError:
+    build_ui = None  # user won't have pyqt_distutils when deploying
+    cmdclass = {}
+
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [{%- if cookiecutter.command_line_interface|lower == 'click' %}'Click>=7.0',{%- endif %} ]
+requirements = [
+    {%- if cookiecutter.command_line_interface|lower == 'click' %}'Click>=7.0',{%- endif %}
+    "PyQt5",
+    "PyQt5-sip",
+]
 
-setup_requirements = [{%- if cookiecutter.use_pytest == 'y' %}'pytest-runner',{%- endif %} ]
+setup_requirements = [
+    {%- if cookiecutter.use_pytest == 'y' %}'pytest-runner',{%- endif %}
+    "pyqt-distutils",
+]
 
 test_requirements = [{%- if cookiecutter.use_pytest == 'y' %}'pytest>=3',{%- endif %} ]
 
@@ -67,4 +83,5 @@ setup(
     url='https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}',
     version='{{ cookiecutter.version }}',
     zip_safe=False,
+    cmdclass=cmdclass,
 )

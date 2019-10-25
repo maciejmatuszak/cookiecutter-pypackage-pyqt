@@ -1,0 +1,12 @@
+{
+    "files": [
+        [
+            "{{ cookiecutter.project_slug }}/MainWindow.ui",
+            "{{ cookiecutter.project_slug }}"
+        ]
+    ],
+    "pyrcc": "pyrcc5",
+    "pyrcc_options": "",
+    "pyuic": "pyuic5",
+    "pyuic_options": "--from-imports"
+}
